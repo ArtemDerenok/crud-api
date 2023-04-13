@@ -2,8 +2,9 @@
   "compilerOptions": {
     "target": "es5",
     "removeComments": true,
-    "outDir": "./dist",
-    "sourceMap": true,
-    "outFile": "main.js"
-  }
+    "sourceMap": true
+  },
+  "outDir": "dist",
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }
