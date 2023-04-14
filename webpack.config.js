@@ -1,15 +1,11 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
-import { dirname } from 'path'
-import NodemonPlugin from 'nodemon-webpack-plugin'
-import ESLintPlugin from 'eslint-webpack-plugin'
+const path = require('path');
+const NodemonPlugin = require('nodemon-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const config = {
+module.exports = {
   mode: 'development',
   entry: './src/server.ts',
+  target: 'node',
   devtool: 'inline-source-map',
   module: {
     rules: [
@@ -26,13 +22,14 @@ const config = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    fallback: {
+      http: require.resolve('stream-http')
+    }
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'server.js'
   },
   plugins: [new NodemonPlugin(), new ESLintPlugin({ extensions: ['ts'] })]
-}
-
-export default config
+};
