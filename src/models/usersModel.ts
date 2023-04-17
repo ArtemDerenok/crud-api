@@ -21,6 +21,19 @@ class UsersModel {
       return error;
     }
   }
+
+  public async findUser(id: string) {
+    try {
+      const data = await users;
+      const user = data.find((elem) => elem.id === id);
+      if (!user) {
+        throw new Error('Id not found');
+      }
+      return user;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 const userModel = UsersModel.getInstance();
