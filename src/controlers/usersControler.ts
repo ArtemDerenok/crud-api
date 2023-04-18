@@ -1,4 +1,5 @@
 import userModel from '../models/usersModel';
+import { IUserBody } from '../utils/interfaces';
 
 class ProductControler {
   private static instance: ProductControler;
@@ -27,8 +28,31 @@ class ProductControler {
       const data = await userModel.findUser(id);
       res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(data));
     } catch (error) {
-      res.writeHead(404, { 'Content-Type': 'application/json' }).end(`<h1>${error.message}</h2>`);
+      res.writeHead(404, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
     }
+  }
+
+  public createUser(req, res) {
+    let body = '';
+
+    req.on('data', (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on('end', async () => {
+      const obj: IUserBody = JSON.parse(body);
+
+      try {
+        await userModel.postUser(obj);
+        res.writeHead(201, { 'Content-Type': 'application/json' }).end(JSON.stringify('User was created'));
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
+      }
+    });
+
+    req.on('error', (error) => {
+      res.writeHead(500, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
+    });
   }
 }
 

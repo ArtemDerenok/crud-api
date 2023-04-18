@@ -1,4 +1,6 @@
+import { randomUUID } from 'crypto';
 import users from '../data/users';
+import { IUser, IUserBody, isUserBody } from '../utils/interfaces';
 
 class UsersModel {
   private static instance: UsersModel;
@@ -27,9 +29,25 @@ class UsersModel {
       const data = await users;
       const user = data.find((elem) => elem.id === id);
       if (!user) {
-        throw new Error('Id not found');
+        throw new Error('User not found');
       }
       return user;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  public async postUser(body: IUserBody) {
+    try {
+      if (isUserBody(body)) {
+        const user: IUser = {
+          id: randomUUID(),
+          ...body,
+        };
+        await users.push(user);
+      } else {
+        throw new Error("Object doesn't have required fields");
+      }
     } catch (error) {
       throw new Error(error.message);
     }

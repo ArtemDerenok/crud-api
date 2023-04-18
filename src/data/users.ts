@@ -1,11 +1,5 @@
 import { randomUUID } from 'crypto';
-
-interface IUser {
-  id: string,
-  username: string,
-  age: number,
-  hobbies: Array<string>
-}
+import { IUser } from '../utils/interfaces';
 
 const users: Array<IUser> = [
   {
