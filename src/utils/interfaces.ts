@@ -11,4 +11,9 @@ export interface IUserBody {
   hobbies: Array<string> | []
 }
 
-export const isUserBody = (obj): obj is IUserBody => 'username' in obj && 'age' in obj && 'hobbies' in obj && Object.keys(obj).length === 3;
+export interface IUserBodyUpdate {
+  id: string,
+  username: string,
+  age: number,
+  hobbies: Array<string> | []
+}

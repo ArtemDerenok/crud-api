@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import users from '../data/users';
-import { IUser, IUserBody, isUserBody } from '../utils/interfaces';
+import { IUser, IUserBody } from '../utils/interfaces';
+import { isUserBody, isUserBodyUpdate } from '../utils/utils';
 
 class UsersModel {
   private static instance: UsersModel;
@@ -45,6 +46,19 @@ class UsersModel {
           ...body,
         };
         await users.push(user);
+      } else {
+        throw new Error("Object doesn't have required fields");
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  public async putUser(body: IUserBody) {
+    try {
+      if (isUserBodyUpdate(body)) {
+        const index: number = await users.findIndex((elem) => elem.id === body.id);
+        await users.splice(index, 1, body);
       } else {
         throw new Error("Object doesn't have required fields");
       }

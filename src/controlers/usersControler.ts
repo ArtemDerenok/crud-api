@@ -1,5 +1,5 @@
 import userModel from '../models/usersModel';
-import { IUserBody } from '../utils/interfaces';
+import { IUserBody, IUserBodyUpdate } from '../utils/interfaces';
 
 class ProductControler {
   private static instance: ProductControler;
@@ -54,8 +54,30 @@ class ProductControler {
       res.writeHead(500, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
     });
   }
-}
 
+  public updateUser(req, res) {
+    let body = '';
+
+    req.on('data', (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on('end', async () => {
+      const obj: IUserBodyUpdate = JSON.parse(body);
+
+      try {
+        await userModel.putUser(obj);
+        res.writeHead(201, { 'Content-Type': 'application/json' }).end(JSON.stringify('User was updated'));
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
+      }
+    });
+
+    req.on('error', (error) => {
+      res.writeHead(500, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
+    });
+  }
+}
 const usersControler = ProductControler.getInstance();
 
 export default usersControler;
