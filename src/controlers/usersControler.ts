@@ -1,5 +1,6 @@
 import userModel from '../models/usersModel';
-import { IUserBody, IUserBodyUpdate } from '../utils/interfaces';
+import { IUserBody } from '../utils/interfaces';
+import { isUuidValid } from '../utils/utils';
 
 class ProductControler {
   private static instance: ProductControler;
@@ -25,8 +26,12 @@ class ProductControler {
 
   public async getUser(req, res, id) {
     try {
-      const data = await userModel.findUser(id);
-      res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(data));
+      if (isUuidValid(id)) {
+        const data = await userModel.findUser(id);
+        res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(data));
+      } else {
+        res.writeHead(400, { 'Content-Type': 'application/jsonn' }).end(JSON.stringify('UUID is invalid'));
+      }
     } catch (error) {
       res.writeHead(404, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
     }
@@ -55,27 +60,31 @@ class ProductControler {
     });
   }
 
-  public updateUser(req, res) {
-    let body = '';
+  public updateUser(req, res, id) {
+    if (isUuidValid(id)) {
+      let body = '';
 
-    req.on('data', (chunk) => {
-      body += chunk.toString();
-    });
+      req.on('data', (chunk) => {
+        body += chunk.toString();
+      });
 
-    req.on('end', async () => {
-      const obj: IUserBodyUpdate = JSON.parse(body);
+      req.on('end', async () => {
+        const obj: IUserBody = JSON.parse(body);
 
-      try {
-        await userModel.putUser(obj);
-        res.writeHead(201, { 'Content-Type': 'application/json' }).end(JSON.stringify('User was updated'));
-      } catch (error) {
-        res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
-      }
-    });
+        try {
+          await userModel.putUser(obj, id);
+          res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify('User was updated'));
+        } catch (error) {
+          res.writeHead(404, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
+        }
+      });
 
-    req.on('error', (error) => {
-      res.writeHead(500, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
-    });
+      req.on('error', (error) => {
+        res.writeHead(500, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
+      });
+    } else {
+      res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify('UUID is invalid'));
+    }
   }
 }
 const usersControler = ProductControler.getInstance();
