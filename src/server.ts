@@ -9,10 +9,9 @@ const server = http.createServer((req, res) => {
       usersControler.getUsers(req, res);
     } else if (req.url === '/api/users' && req.method === 'POST') {
       usersControler.createUser(req, res);
-    } else if (req.url.match(/\/api\/users\/\?id=(.{36})/) && req.method === 'PUT') {
+    } else if (req.url.match(/\/api\/users\/\?id=(.{36})$/) && req.method === 'PUT') {
       usersControler.updateUser(req, res, baseURL.query.id);
-    } else if (req.url.match(/\/api\/users\/\?id=(.{36})/) && req.method === 'GET') {
-      console.log(baseURL);
+    } else if (req.url.match(/\/api\/users\/\?id=(.{36})$/) && req.method === 'GET') {
       usersControler.getUser(req, res, baseURL.query.id);
     } else {
       res.writeHead(404, { 'Content-Type': 'text/html' }).end('<h1>Page not found!</h1>');

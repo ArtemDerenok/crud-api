@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import users from '../data/users';
 import { IUser, IUserBody } from '../utils/interfaces';
-import { isUserBody } from '../utils/utils';
+import isUserBody from '../utils/utils';
 
 class UsersModel {
   private static instance: UsersModel;

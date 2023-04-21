@@ -1,15 +1,15 @@
-import { randomUUID } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 import { IUser } from '../utils/interfaces';
 
 const users: Array<IUser> = [
   {
-    id: randomUUID(),
+    id: uuidv4(),
     username: 'Artem',
     age: 28,
     hobbies: ['Programming'],
   },
   {
-    id: randomUUID(),
+    id: uuidv4(),
     username: 'Ivan',
     age: 25,
     hobbies: ['Books'],

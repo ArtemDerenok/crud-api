@@ -1,6 +1,6 @@
+import { validate as uuidValidate } from 'uuid';
 import userModel from '../models/usersModel';
 import { IUserBody } from '../utils/interfaces';
-import { isUuidValid } from '../utils/utils';
 
 class ProductControler {
   private static instance: ProductControler;
@@ -26,7 +26,7 @@ class ProductControler {
 
   public async getUser(req, res, id) {
     try {
-      if (isUuidValid(id)) {
+      if (uuidValidate(id)) {
         const data = await userModel.findUser(id);
         res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(data));
       } else {
@@ -61,7 +61,7 @@ class ProductControler {
   }
 
   public updateUser(req, res, id) {
-    if (isUuidValid(id)) {
+    if (uuidValidate(id)) {
       let body = '';
 
       req.on('data', (chunk) => {
