@@ -3,7 +3,7 @@ const NodemonPlugin = require('nodemon-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV,
   entry: './src/server.ts',
   target: 'node',
   devtool: 'inline-source-map',
