@@ -13,6 +13,8 @@ const server = http.createServer((req, res) => {
       usersControler.updateUser(req, res, baseURL.query.id);
     } else if (req.url.match(/\/api\/users\/\?id=(.{36})$/) && req.method === 'GET') {
       usersControler.getUser(req, res, baseURL.query.id);
+    } else if (req.url.match(/\/api\/users\/\?id=(.{36})$/) && req.method === 'DELETE') {
+      usersControler.deleteUser(req, res, baseURL.query.id);
     } else {
       res.writeHead(404, { 'Content-Type': 'text/html' }).end('<h1>Page not found!</h1>');
     }

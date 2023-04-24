@@ -86,6 +86,19 @@ class ProductControler {
       res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify('UUID is invalid'));
     }
   }
+
+  public async deleteUser(req, res, id) {
+    try {
+      if (uuidValidate(id)) {
+        await userModel.removeUser(id);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+      } else {
+        res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify('UUID is invalid'));
+      }
+    } catch (error) {
+      res.writeHead(404, { 'Content-Type': 'application/json' }).end(JSON.stringify(error.message));
+    }
+  }
 }
 const usersControler = ProductControler.getInstance();
 

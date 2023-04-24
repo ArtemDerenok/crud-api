@@ -70,6 +70,19 @@ class UsersModel {
       throw new Error(error.message);
     }
   }
+
+  public async removeUser(id) {
+    try {
+      const index: number = await users.findIndex((elem) => elem.id === id);
+      if (index >= 0) {
+        await users.splice(index, 1);
+      } else {
+        throw new Error("User doesn't exist");
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 const userModel = UsersModel.getInstance();
