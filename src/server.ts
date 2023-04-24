@@ -1,6 +1,9 @@
 import * as http from 'http';
 import * as url from 'url';
+import * as dotenv from 'dotenv';
 import usersControler from './controlers/usersControler';
+
+dotenv.config();
 
 const server = http.createServer((req, res) => {
   const baseURL = url.parse(req.url, true);
@@ -16,7 +19,7 @@ const server = http.createServer((req, res) => {
     } else if (req.url.match(/\/api\/users\/\?id=(.{36})$/) && req.method === 'DELETE') {
       usersControler.deleteUser(req, res, baseURL.query.id);
     } else {
-      res.writeHead(404, { 'Content-Type': 'text/html' }).end('<h1>Page not found!</h1>');
+      res.writeHead(404, { 'Content-Type': 'application/json' }).end(JSON.stringify("Resource doesn't exist"));
     }
   }
 });
