@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start:prod": "cross-env NODE_ENV=production webpack",
     "start:dev": "cross-env NODE_ENV=development webpack --watch",
     "lint": "eslint --fix --ext .ts ."
@@ -17,7 +17,9 @@
     "@babel/eslint-parser": "^7.21.3",
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-typescript": "^7.21.4",
+    "@types/jest": "^29.5.1",
     "@types/node": "^18.15.11",
+    "@types/supertest": "^2.0.12",
     "@types/uuid": "^9.0.1",
     "@types/webpack": "^5.28.1",
     "@types/webpack-dev-server": "^4.7.2",
@@ -32,10 +34,12 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-webpack-plugin": "^4.0.1",
+    "jest": "^29.5.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nodemon": "^2.0.22",
     "nodemon-webpack-plugin": "^4.8.1",
     "stream-http": "^3.2.0",
+    "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
@@ -47,6 +51,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.3",
+    "supertest": "^6.3.3",
     "uuid": "^9.0.0"
   }
 }
