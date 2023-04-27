@@ -48,3 +48,13 @@ describe('PUT user by id api/users/{userID}', () => {
     expect(JSON.parse(res.text)).toBe('User was updated');
   });
 });
+
+describe('DELETE user by id api/users/{userID}', () => {
+  it('It should delete user', async () => {
+    const resTestUser = await req.get('/api/users');
+    const { id } = resTestUser.body[0];
+
+    const res = await req.delete(`/api/users/?id=${id}`);
+    expect(res.status).toBe(200);
+  });
+});
