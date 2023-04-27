@@ -91,7 +91,7 @@ class ProductControler {
     try {
       if (uuidValidate(id)) {
         await userModel.removeUser(id);
-        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.writeHead(200, { 'Content-Type': 'application/json' }).end();
       } else {
         res.writeHead(400, { 'Content-Type': 'application/json' }).end(JSON.stringify('UUID is invalid'));
       }
