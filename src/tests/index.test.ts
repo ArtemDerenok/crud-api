@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import server from '../server';
+import server from '../worker';
 import { IUserBody } from '../utils/interfaces';
 
 const req = request(server);

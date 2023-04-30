@@ -4,7 +4,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: './src/server.ts',
+  entry: process.env.NODE_ENV_CLUSTER === 'single' ? '/src/server.ts' : '/src/cluster.ts',
   target: 'node',
   devtool: 'inline-source-map',
   module: {
