@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start:prod": "cross-env NODE_ENV=production webpack && node ./dist/server.js",
+    "start:prod": "cross-env NODE_ENV=production webpack",
     "start:multi": "cross-env NODE_ENV=development webpack --watch",
     "start:dev": "cross-env NODE_ENV=development NODE_ENV_CLUSTER=single webpack -- watch",
     "lint": "eslint --fix --ext .ts ."
